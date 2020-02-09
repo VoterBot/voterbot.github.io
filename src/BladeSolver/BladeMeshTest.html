@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="UTF-8">
+		<title>BladeMeshTest.</title>
+		<style type="text/css">
+			body {
+				overflow: hidden;
+				background: #fff;
+				padding: 1px 0 0;
+			}
+
+			#guiControls {
+				position: absolute;
+				z-index: 1;
+				margin-top: -20px;
+			}
+				
+			#screenOutput {
+				position: absolute;
+				z-index: 1;
+				color: white;
+				border: 0px;
+			}
+
+			h2{
+				font-size:18px;
+			}							
+			
+	  </style>			
+	  
+	  <iframe id="7062_bspline" src="./7062.bspline.dat" style="display: none;"></iframe>	 
+	  <iframe id="rectangle_bspline" src="./rectangle.bspline.dat" style="display: none;"></iframe>
+	  <script language="javascript" type="text/javascript" src="Point_2D.js"></script>  
+	  <script language="javascript" type="text/javascript" src="WeightedPoint_2D.js"></script>    
+	  <script language="javascript" type="text/javascript" src="Point_3D.js"></script>  
+	  <script language="javascript" type="text/javascript" src="WeightedPoint_3D.js"></script>    
+	  <script language="javascript" type="text/javascript" src="NURBSCurve.js"></script>
+	  <script language="javascript" type="text/javascript" src="SurfaceCurve.js"></script>	  
+	  <script language="javascript" type="text/javascript" src="NURBSSolid.js"></script>	  
+	  <script language="javascript" type="text/javascript" src="BladeGeometry.js"></script>
+	  <script language="javascript" type="text/javascript" src="BsplineBlade.js"></script>	  
+	  <script language="javascript" type="text/javascript" src="D_matrix.js"></script>
+	  <script language="javascript" type="text/javascript" src="PotentialFlow.js"></script>	  	  
+	  <script language="javascript" type="text/javascript" src="BladeMesh.js"></script>
+	  
+	  <style> body {padding: 0; margin: 0;} </style>
+	</head>
+
+	<body onload="testBladeMesh()">
+		<div id="guiControls">
+			&nbsp;
+		</div>
+		<div id="screenOutput">
+			&nbsp;
+		</div>
+	</body>
+</html>

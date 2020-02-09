@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="UTF-8">
+		<title>Blade Panel Method Solver.</title>
+		<style type="text/css">
+			/* css for the sketch application. */
+			/**/
+			body {
+				background: #fff;
+				padding: 1px 0 0;
+			}
+
+			#sketchContainer{
+				z-index: -1;
+				position:relative; 
+				left: 0px; 
+				top: -15px;
+			}
+			
+			#drawingCanvas {
+				position: absolute;
+				z-index: 0;
+			}
+			
+			#bladeDesignCanvas {
+				position: relative;
+				z-index: 0;
+			}
+			
+			#resultsCanvas {
+				position: relative;
+				z-index: 0;
+			}
+			
+			#guiControls_solver {
+				position: absolute;
+				z-index: 1;
+				margin-top: 0px;
+			}
+			
+			#guiControls_design {
+				position: absolute;
+				z-index: 2;
+				margin-top: -40px;
+			}
+			
+			#guiControls_results {
+				position: absolute;
+				z-index: 2;
+				margin-top: -40px;
+			}
+				
+			#areaAndVolumeOutput {
+				position: absolute;
+				z-index: 1;
+				color: black;
+				border: 0px;
+				font: 14px 'Open Sans';
+				font-family: sans-serif;
+			}
+			
+			#solverResultsOutput {
+				position: absolute;
+				z-index: 0;
+				color: white;
+				border: 0px;
+			}
+			
+			.solverResultsButton {
+				position: absolute;			
+				display: none;
+				padding: 2px;
+				font-family: sans-serif;
+				font-size: 12px;				
+			}
+			.solverResultsButton:hover {
+				background: CadetBlue;
+				cursor: pointer;
+			}
+			
+			#designPlotContainer{
+				display:block;
+				margin:10px auto; /*auto centres across page*/
+				/*margin:10px 10px;*/
+				color:white;
+			}
+			#resultsPlotContainer{
+				display:block;
+				margin:10px auto; /*auto centres across page*/
+				color:white;
+			}
+			
+			#bladeSketchTextContainer{
+				display:block;
+				margin:10px 20px; /*auto centres across page*/
+				color:black;
+			}
+			
+			h2{
+				font-size:18px;
+			}
+			
+			</style>	
+
+		<style type="text/css">
+			/* css for page tabs. */
+			/**/
+		
+			.main {margin: 0; min-width: 120px; max-width:800px; background: #252525; color: #B9B5C7; font: 14px 'Open Sans', sans-serif;}			
+			.content {background: #fff; color: #373737;}
+			.content > div {display: none; padding: 20px 25px 5px;}
+
+			.tabInput {display: none;}
+			.tabLabel {display: inline-block; padding: 5px 15px; font-weight: 600; text-align: center;}
+			.tabLabel:hover {color: #ed5a6a; cursor: pointer;}
+			.tabInput:checked + .tabLabel {background: #ed5a6a; color: #fff;}
+
+			#solverTab:checked ~ .content #solverSketch,
+			#bladeTab:checked ~ .content #bladeSketch,
+			#resultsTab:checked ~ .content #resultsSketch,
+			#tab4:checked ~ .content #content4 {
+				display: inline;
+			}
+
+		</style>
+	  
+	  
+		<iframe id="7062_bspline" type="text/plain" src="./7062_bspline.txt" style="display: none;"></iframe>	 
+		<iframe id="rectangle_bspline" type="text/plain" src="./rectangle_bspline.txt" style="display: none;"></iframe>
+		<script language="javascript" type="text/javascript" src="../js/dat.gui.min.js"></script>	  
+		<script language="javascript" type="text/javascript" src="../js/three.min.js"></script>
+		<script language="javascript" type="text/javascript" src="../js/OrbitControls.js"></script>	  
+		<script language="javascript" type="text/javascript" src="Point_2D.js"></script>  
+		<script language="javascript" type="text/javascript" src="WeightedPoint_2D.js"></script>    
+		<script language="javascript" type="text/javascript" src="Point_3D.js"></script>  
+		<script language="javascript" type="text/javascript" src="WeightedPoint_3D.js"></script>    
+		<script language="javascript" type="text/javascript" src="NURBSCurve.js"></script>
+		<script language="javascript" type="text/javascript" src="SurfaceCurve.js"></script>	  
+		<script language="javascript" type="text/javascript" src="NURBSSolid.js"></script>	  
+		<script language="javascript" type="text/javascript" src="DrawModel.js"></script>
+		<script language="javascript" type="text/javascript" src="BsplineBlade.js"></script>
+		<script language="javascript" type="text/javascript" src="D_matrix.js"></script>	  				
+		<script language="javascript" type="text/javascript" src="LeastSquaresCurve.js"></script>
+		<script language="javascript" type="text/javascript" src="BladeMesh.js"></script>
+		<script language="javascript" type="text/javascript" src="PlotPanel.js"></script>
+		<script language="javascript" type="text/javascript" src="sketch.js"></script>
+	</head>
+	
+	<body onload="loadSketch()">
+		
+		<div class="main">
+
+			<input class="tabInput" id="bladeTab" type="radio" name="tabs" checked>
+			<label class="tabLabel" for="bladeTab">Blade</label>
+			
+			<input class="tabInput" id="solverTab" type="radio" name="tabs">
+			<label class="tabLabel" for="solverTab">Solver</label>
+
+			<input class="tabInput" id="resultsTab" type="radio" name="tabs">
+			<label class="tabLabel" id="resultsTabLabel" for="resultsTab" style="display: none;">Results</label>
+
+			<div class="content">  
+				<div id="bladeSketch">
+					<div id="guiControls_design">&nbsp;</div>
+					<div id="areaAndVolumeOutput">&nbsp;</div>					
+					<div id="bladeDesignCanvas"></div>
+					<div id="designPlotContainer"></div>
+					<div id="bladeSketchTextContainer"></div>	
+				</div>
+				
+				<div id="solverSketch" style="padding:0;">
+					<div id="sketchContainer">
+						<div id="guiControls_solver">&nbsp;</div>					
+						<div id="drawingCanvas">&nbsp;</div>		
+						<div id="solverResultsOutput">&nbsp;</div>
+						<div id="solverResultsDeleteButton" class="solverResultsButton" title="delete">&#9940;</div>
+						<div id="solverResultsSaveButton" class="solverResultsButton" title="save">&#128190;</div>
+						<div id="solverResultsCloseButton" class="solverResultsButton" title="close">&#10060;</div>
+					</div>	
+				</div>
+
+				<div id="resultsSketch">
+					<div id="guiControls_results">&nbsp;</div>				
+					<canvas id="resultsGradientCanvas" style="display:none;"></canvas>
+					<div id="resultsModelContainer"></div>
+					<div id="resultsPlotContainer"></div>
+				</div>			  
+			</div>
+		</div>
+		
+	</body>
+</html>
