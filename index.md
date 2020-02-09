@@ -1,4 +1,4 @@
-<a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+## <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
 
 # BladeSolver
 
