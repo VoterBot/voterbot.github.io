@@ -1,3 +1,5 @@
+<a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+
 # BladeSolver
 
 <iframe id="BladeSolver" src="./src/BladeSolver/index.html" style="width: 900px; height: 650px;overflow-y:auto;" frameborder="0" marginwidth="0" marginheight="0">
