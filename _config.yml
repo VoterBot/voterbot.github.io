@@ -7,6 +7,9 @@ baseurl:      ""
 paginate:     2
 locale:       "en"
 
+github:
+  is_project_page: "true"
+
 # About/contact
 author:
   name:       Author name
