@@ -1,7 +1,7 @@
 theme: jekyll-theme-cayman
 
 # Setup
-title:        escapee.org | voterbot.github.io
+title:        escapee.org | [github.com/voterbot](https://github.com/VoterBot/voterbot.github.io/).
 tagline:      Some javascript sketches. B-spline / NURBS / other stuff
 baseurl:      ""
 paginate:     2
