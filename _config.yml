@@ -6,6 +6,7 @@ tagline:      Some javascript sketches. B-spline / NURBS / other stuff
 baseurl:      ""
 paginate:     2
 locale:       "en"
+show_downloads: "true"
 
 # About/contact
 author:
